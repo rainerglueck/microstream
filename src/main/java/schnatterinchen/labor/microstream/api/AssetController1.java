@@ -2,6 +2,7 @@ package schnatterinchen.labor.microstream.api;
 
 import one.microstream.storage.types.EmbeddedStorage;
 import one.microstream.storage.types.EmbeddedStorageManager;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import schnatterinchen.labor.microstream.data.AssetRoot1;
@@ -18,7 +19,7 @@ public class AssetController1 {
         startAssetRoot();
     }
 
-    @GetMapping("/")
+    @GetMapping(value = "/", produces = MediaType.TEXT_PLAIN_VALUE)
     String asset1(){
         return "assetRoot1.size() = " + assetRoot1.assetList.size();
     }
