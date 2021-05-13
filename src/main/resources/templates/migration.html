@@ -20,7 +20,7 @@
 <main role="main" class="container">
     <div class="starter-template">
         <h1>Migration (Modify data structure of an object)</h1>
-        <span th:text="'# of Asset1: ' + ${assetRoot1size}"></span>
+        <span th:text="'# of Asset1: ' + ${assetRoot1.assetList.size()}"></span>
         <!--h2>
             <span th:text="'Hello, ' + ${message}"></span>
         </h2-->
@@ -31,8 +31,8 @@
             <tr>
                 <th>Asset 1</th>
             </tr>
-            <tr th:each="asset : ${asset1list}">
-                <td th:text="${asset.isin}"></td>
+            <tr th:each="asset : ${assetRoot1.assetList}">
+                <td th:text="${asset.toJsonString()}"></td>
             </tr>
         </table>
     </div>
