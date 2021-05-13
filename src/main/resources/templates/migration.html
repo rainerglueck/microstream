@@ -8,7 +8,7 @@
 
     <!-- link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/-->
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
-
+    <link rel="icon" href="favicon.ico" type="image/ico">
 </head>
 
 <body>
@@ -20,16 +20,19 @@
 <main role="main" class="container">
     <div class="starter-template">
         <h1>Migration (Modify data structure of an object)</h1>
-        <span th:text="'# of Asset1: ' + ${assetRoot1.assetList.size()}"></span>
-        <!--h2>
-            <span th:text="'Hello, ' + ${message}"></span>
-        </h2-->
     </div>
-    <!-- div th:if="${ not#lists.isEmpty(asset1list)}"-->
     <div>
         <table>
             <tr>
-                <th>Asset 1</th>
+                <th><span th:text="'# of Asset1: ' + ${assetRoot1.assetList.size()}"></span>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <form action="/asset1" method="post">
+                        <input type="submit" value="Add asset1"/>
+                    </form>
+                </td>
             </tr>
             <tr th:each="asset : ${assetRoot1.assetList}">
                 <td th:text="${asset.toJsonString()}"></td>
