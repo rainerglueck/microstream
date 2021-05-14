@@ -34,3 +34,4 @@ build/
 
 ### MICROSTREAM ###
 storage/*
+.DS_Store
