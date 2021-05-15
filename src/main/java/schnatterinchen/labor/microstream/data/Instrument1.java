@@ -2,12 +2,17 @@ package schnatterinchen.labor.microstream.data;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class Instrument1 {
+public class Instrument1 extends Instrument {
+
+    private final static Logger logger = LoggerFactory.getLogger(Instrument1.class);
 
     public final String isin;
     public final String vvzid;
@@ -19,14 +24,5 @@ public class Instrument1 {
         Objects.requireNonNull(vvzid);
         this.isin = isin;
         this.vvzid = vvzid;
-    }
-
-    public String toJsonString() {
-        final ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            return objectMapper.writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            return e.getMessage();
-        }
     }
 }

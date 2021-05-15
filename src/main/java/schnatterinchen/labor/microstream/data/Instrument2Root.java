@@ -3,7 +3,7 @@ package schnatterinchen.labor.microstream.data;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Instrument1Root {
+public class Instrument2Root {
 
-    public final List<Instrument1> instrument1List = new ArrayList<>();
+    public final List<Instrument2> instrument2List = new ArrayList<>();
 }
