@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Asset1 {
+public class Instrument1 {
 
     public final String isin;
     public final String vvzid;
 
-    public final List<AssetClass> assetClassList = new ArrayList<>();
+    public final List<PropertyKeyValue> propertyKeyValueList = new ArrayList<>();
 
-    public Asset1(String isin, String vvzid) {
+    public Instrument1(String isin, String vvzid) {
         Objects.requireNonNull(isin);
         Objects.requireNonNull(vvzid);
         this.isin = isin;
