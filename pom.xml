@@ -14,8 +14,9 @@
     <name>microstream</name>
     <description>Demo project for microstream</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>8</java.version>
         <jackson.version>2.12.3</jackson.version>
+        <apache.commons.verions>2.8.0</apache.commons.verions>
     </properties>
     <repositories>
         <repository>
@@ -52,6 +53,11 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${apache.commons.verions}</version>
         </dependency>
     </dependencies>
 
