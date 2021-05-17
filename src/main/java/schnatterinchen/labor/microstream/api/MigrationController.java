@@ -2,6 +2,7 @@ package schnatterinchen.labor.microstream.api;
 
 import one.microstream.storage.types.EmbeddedStorage;
 import one.microstream.storage.types.EmbeddedStorageManager;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,15 +72,14 @@ public class MigrationController {
         logger.info("POST /migrate1_to_2");
         {
             try {
-                Path src = Paths.get(storage_instrument1);
+                File src = Paths.get(storage_instrument1).toFile();
                 File dst = Paths.get(storage_instrument2).toFile();
                 if (dst.exists()) {
                     messagesList.add("delete [" + dst.toString() + "]");
-                    org.apache.commons.io.FileUtils.deleteDirectory(dst);
-                    //FileUtils.deleteDirectory(dst);
+                    FileUtils.deleteDirectory(dst);
                 }
                 messagesList.add("copy [" + src.toString() + "] --> [" + dst.toString() + "]");
-                org.apache.commons.io.FileUtils.copyDirectory(src, dst);
+                FileUtils.copyDirectory(src, dst);
             } catch (Exception e) {
                 messagesList.add(e.getMessage());
             }
