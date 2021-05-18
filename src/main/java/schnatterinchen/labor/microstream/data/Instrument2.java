@@ -13,7 +13,7 @@ public class Instrument2 extends Instrument {
     private final static Logger logger = LoggerFactory.getLogger(Instrument2.class);
 
     public final String isin;
-    //public final String vvzid;
+    public final String vvzid;
 
     public final List<PropertyKeyValue> propertyKeyValueList = new ArrayList<>();
 
@@ -21,6 +21,6 @@ public class Instrument2 extends Instrument {
         Objects.requireNonNull(isin);
         Objects.requireNonNull(vvzid);
         this.isin = isin;
-        //this.vvzid = vvzid;
+        this.vvzid = vvzid;
     }
 }

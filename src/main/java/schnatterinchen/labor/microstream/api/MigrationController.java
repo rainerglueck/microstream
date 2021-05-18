@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import schnatterinchen.labor.microstream.data.Instrument1;
 import schnatterinchen.labor.microstream.data.Instrument1Root;
+import schnatterinchen.labor.microstream.data.Instrument2Root;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +30,7 @@ public class MigrationController {
     private final String storage_instrument1;
     private final String storage_instrument2;
     private final Instrument1Root instrument1Root = new Instrument1Root();
+    private final Instrument2Root instrument2Root = new Instrument2Root();
     private final List<String> messagesList = new ArrayList<>();
     private boolean deletemessages = false;
 
@@ -50,6 +50,7 @@ public class MigrationController {
             messagesList.clear();
         }
         model.addAttribute("instrument1Root", instrument1Root);
+        model.addAttribute("instrument2Root", instrument1Root);
         model.addAttribute("messagesList", messagesList);
         deletemessages = true;
         return "migration";
@@ -80,6 +81,7 @@ public class MigrationController {
                 }
                 messagesList.add("copy [" + src.toString() + "] --> [" + dst.toString() + "]");
                 FileUtils.copyDirectory(src, dst);
+                EmbeddedStorage.start(instrument2Root, Paths.get(storage_instrument2));
             } catch (Exception e) {
                 messagesList.add(e.getMessage());
             }
