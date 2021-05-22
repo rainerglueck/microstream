@@ -1,4 +1,4 @@
-package schnatterinchen.labor.microstream.persistence.vvz;
+package schnatterinchen.labor.microstream.persistence;
 
 import one.microstream.storage.types.EmbeddedStorage;
 import one.microstream.storage.types.EmbeddedStorageManager;
@@ -19,16 +19,16 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 
 @Component
-public class Warehousevvz implements VvzPersistence {
+public class VvzWarehouse implements VvzPersistence {
 
-    private final static Logger logger = LoggerFactory.getLogger(Warehousevvz.class);
+    private final static Logger logger = LoggerFactory.getLogger(VvzWarehouse.class);
 
     private final long initialLoadTimeMilliSecs;
     private final EmbeddedStorageManager storageInstrument1;
     private final VvzDataRoot vvzDataRoot = new VvzDataRoot();
 
     @Autowired
-    private Warehousevvz(@Value("${storage.migration.warehousevvz}") String storage_instrument1) {
+    private VvzWarehouse(@Value("${storage.migration.warehousevvz}") String storage_instrument1) {
         Instant start = Instant.now();
         this.storageInstrument1 = EmbeddedStorage.start(vvzDataRoot, Paths.get(storage_instrument1));
         Instant finish = Instant.now();

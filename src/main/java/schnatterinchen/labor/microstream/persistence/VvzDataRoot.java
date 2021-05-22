@@ -1,6 +1,4 @@
-package schnatterinchen.labor.microstream.persistence.vvz;
-
-import schnatterinchen.labor.microstream.model.VvzInstrument;
+package schnatterinchen.labor.microstream.persistence;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;

@@ -1,4 +1,4 @@
-package schnatterinchen.labor.microstream.persistence.vvz;
+package schnatterinchen.labor.microstream.persistence;
 
 import schnatterinchen.labor.microstream.model.VvzInstrument;
 
