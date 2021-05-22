@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,8 +24,8 @@ public class VvzInstrument {
         final ObjectMapper objectMapper = new ObjectMapper();
         try {
             String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(this);
-            List<String> htmline = Arrays.asList(json.split("\\n"));
-            return htmline;
+            //List<String> htmline = Arrays.asList(json.split("\\n"));
+            return Collections.unmodifiableList(Arrays.asList(json));
         } catch (JsonProcessingException e) {
             return Arrays.asList(e.getMessage());
         }

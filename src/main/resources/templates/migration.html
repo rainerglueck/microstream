@@ -55,7 +55,7 @@
                 <h5>Data structure</h5>
                 <table>
                     <tr>
-                        <th><span th:text="'# of Asset1: ' + ${vvzinstrumentlist.size()}"></span>
+                        <th><span th:text="'# of vvzInstruments: ' + ${warehousedetailsVvz.warehouseSize}"></span>
                         </th>
                     </tr>
                     <tr th:each="instrument : ${vvzinstrumentlist}">
@@ -66,13 +66,10 @@
                         </td>
                     </tr>
                 </table>
-                <h5>Log</h5>
+                <h5>Performance details</h5>
                 <div th:each="message: ${messagesList}" class="code">
                     <p th:text="${message}"/>
                 </div>
-            </div>
-            <div id="manyobjs" class="col s12">
-                <h4>Many</h4>
             </div>
         </div>
     </div>

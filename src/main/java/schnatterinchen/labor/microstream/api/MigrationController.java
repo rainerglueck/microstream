@@ -14,6 +14,7 @@ import schnatterinchen.labor.microstream.usecases.VvzPersistence;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class MigrationController {
@@ -34,9 +35,11 @@ public class MigrationController {
     @GetMapping(value = "/")
     String asset1(Model model) {
         logger.info("GET /");
-        model.addAttribute("vvzinstrumentlist", vvzPersistence.fetchvvzInstruments());
-        model.addAttribute("instrument2Root", null);
-        model.addAttribute("messagesList", null);
+        final List<VvzInstrument> first3elements = vvzPersistence.fetchvvzInstruments().stream()
+                .limit(3)
+                .collect(Collectors.toList());
+        model.addAttribute("warehousedetailsVvz", vvzPersistence.fetchWarehouseDetails());
+        model.addAttribute("vvzinstrumentlist", first3elements);
         return "migration";
     }
 
@@ -50,6 +53,9 @@ public class MigrationController {
     @PostMapping(value = "/add")
     String add(Model model, @RequestParam(name = "nbr") int nbr) {
         logger.info("POST /add?nbr=" + nbr);
+        final List<VvzInstrument> vvzInstrumentList = dataGenerator.generateVvzInstruments(nbr);
+        vvzInstrumentList.forEach(x -> vvzPersistence.storeVvzInstrument(x)
+        );
         return "redirect:/";
     }
 
@@ -73,15 +79,5 @@ public class MigrationController {
             }
         }
         return "redirect:/";
-    }
-
-    private void clearInstrument1_store() {
-
-    }
-
-    private void addInstrument1() {
-        VvzInstrument instrument1 = dataGenerator.generateVvzInstruments(1).get(0);
-        vvzPersistence.storeVvzInstrument(instrument1);
-
     }
 }
