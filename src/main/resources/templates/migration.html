@@ -60,16 +60,15 @@
                     </tr>
                     <tr th:each="instrument : ${vvzinstrumentlist}">
                         <td>
-                            <div th:each="line: ${instrument.toJsonLines()}">
+                            <div th:each="line: ${instrument.toJsonLines()}" class="code">
                                 <p th:text="${line}"/>
                             </div>
                         </td>
                     </tr>
                 </table>
                 <h5>Performance details</h5>
-                <div th:each="message: ${messagesList}" class="code">
-                    <p th:text="${message}"/>
-                </div>
+                <div th:text="'VVZ Warehouse initial load time [ms]: ' + ${warehousedetailsVvz.initialLoadTimeMilliSecs}"
+                     class="code"></div>
             </div>
         </div>
     </div>

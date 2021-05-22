@@ -17,16 +17,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-public class MigrationController {
+public class VvzInstrumentController {
 
-    private final static Logger logger = LoggerFactory.getLogger(MigrationController.class);
+    private final static Logger logger = LoggerFactory.getLogger(VvzInstrumentController.class);
 
     private final VvzPersistence vvzPersistence;
     private final DataGenerator dataGenerator;
     private final List<String> messagesList = new ArrayList<>();
 
     @Autowired
-    private MigrationController(VvzPersistence vvzPersistence
+    private VvzInstrumentController(VvzPersistence vvzPersistence
             , DataGenerator dataGenerator) {
         this.vvzPersistence = vvzPersistence;
         this.dataGenerator = dataGenerator;
