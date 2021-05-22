@@ -7,12 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import schnatterinchen.labor.microstream.model.DataGenerator;
 import schnatterinchen.labor.microstream.model.VvzInstrument;
 import schnatterinchen.labor.microstream.usecases.VvzPersistence;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 @Controller
 public class MigrationController {
@@ -20,36 +21,35 @@ public class MigrationController {
     private final static Logger logger = LoggerFactory.getLogger(MigrationController.class);
 
     private final VvzPersistence vvzPersistence;
+    private final DataGenerator dataGenerator;
     private final List<String> messagesList = new ArrayList<>();
-    private boolean deletemessages = false;
 
     @Autowired
-    private MigrationController(VvzPersistence vvzPersistence) {
+    private MigrationController(VvzPersistence vvzPersistence
+            , DataGenerator dataGenerator) {
         this.vvzPersistence = vvzPersistence;
+        this.dataGenerator = dataGenerator;
     }
 
     @GetMapping(value = "/")
     String asset1(Model model) {
         logger.info("GET /");
-        if (deletemessages) {
-            messagesList.clear();
-        }
         model.addAttribute("vvzinstrumentlist", vvzPersistence.fetchvvzInstruments());
         model.addAttribute("instrument2Root", null);
-        model.addAttribute("messagesList", messagesList);
-        deletemessages = true;
+        model.addAttribute("messagesList", null);
         return "migration";
     }
 
-    @PostMapping(value = "/reset")
+    @PostMapping(value = "/deleteall")
     String addAsset1(Model model) {
-        logger.info("POST /reset");
-        messagesList.clear();
-        {
-            clearInstrument1_store();
-            addInstrument1();
-        }
-        deletemessages = false;
+        logger.info("POST /deleteall");
+        vvzPersistence.deleteAll();
+        return "redirect:/";
+    }
+
+    @PostMapping(value = "/add")
+    String add(Model model, @RequestParam(name = "nbr") int nbr) {
+        logger.info("POST /add?nbr=" + nbr);
         return "redirect:/";
     }
 
@@ -72,23 +72,16 @@ public class MigrationController {
                 messagesList.add(e.getMessage());
             }
         }
-        deletemessages = false;
         return "redirect:/";
     }
 
     private void clearInstrument1_store() {
-        //messagesList.add("clear instrument1List: instrument1Root.instrument1List.clear()");
-        //messagesList.add("store instrument1List: storageInstrument1.store(instrument1Root)");
-        //instrument1Root.instrument1List.clear();
-        //storageInstrument1.store(instrument1Root.instrument1List);
+
     }
 
     private void addInstrument1() {
-        messagesList.add("add instrument1 to instrument1List");
-        messagesList.add("store instrument1List: storageInstrument1.store(instrument1Root)");
-        IntStream.range(0, 1).forEach(x -> {
-            VvzInstrument instrument1 = new VvzInstrument("vvzid " + (x + 1), "isin " + (x + 1));
-            vvzPersistence.storeVvzInstrument(instrument1);
-        });
+        VvzInstrument instrument1 = dataGenerator.generateVvzInstruments(1).get(0);
+        vvzPersistence.storeVvzInstrument(instrument1);
+
     }
 }

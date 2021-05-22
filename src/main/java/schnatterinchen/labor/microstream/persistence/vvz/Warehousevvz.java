@@ -9,8 +9,8 @@ import schnatterinchen.labor.microstream.model.VvzInstrument;
 import schnatterinchen.labor.microstream.usecases.VvzPersistence;
 
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @Component
 public class Warehousevvz implements VvzPersistence {
@@ -27,12 +27,20 @@ public class Warehousevvz implements VvzPersistence {
 
     @Override
     public void storeVvzInstrument(VvzInstrument vvzInstrument) {
-        vvzDataRoot.instrumentList.add(vvzInstrument);
-        storageInstrument1.store(vvzDataRoot);
+        if (vvzInstrument != null) {
+            vvzDataRoot.vvzInstrumentMap.put(vvzInstrument.vvzid, vvzInstrument);
+            storageInstrument1.store(vvzDataRoot);
+        }
     }
 
     @Override
-    public List<VvzInstrument> fetchvvzInstruments() {
-        return Collections.unmodifiableList(vvzDataRoot.instrumentList);
+    public Collection<VvzInstrument> fetchvvzInstruments() {
+        return Collections.unmodifiableCollection(vvzDataRoot.vvzInstrumentMap.values());
+    }
+
+    @Override
+    public void deleteAll() {
+        vvzDataRoot.vvzInstrumentMap.clear();
+        storageInstrument1.store(vvzDataRoot);
     }
 }

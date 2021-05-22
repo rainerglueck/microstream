@@ -2,10 +2,10 @@ package schnatterinchen.labor.microstream.persistence.vvz;
 
 import schnatterinchen.labor.microstream.model.VvzInstrument;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class VvzDataRoot {
 
-    public final List<VvzInstrument> instrumentList = new ArrayList<>();
+    protected final Map<String, VvzInstrument> vvzInstrumentMap = new LinkedHashMap<>();
 }
