@@ -7,5 +7,5 @@ import java.util.concurrent.ConcurrentMap;
 
 public class VvzDataRoot {
 
-    protected final ConcurrentMap<String, VvzInstrument> vvzInstrumentMap = new ConcurrentHashMap<>();
+    protected final ConcurrentMap<String, VvzWarehouseInstrument> vvzWarehouseInstrumentConcurrentMap = new ConcurrentHashMap<>();
 }

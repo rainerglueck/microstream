@@ -1,14 +1,17 @@
 package schnatterinchen.labor.microstream.persistence.vvz;
 
+import schnatterinchen.labor.microstream.model.VvzInstrument;
+
 import java.util.Objects;
 
 public class VvzWarehouseInstrument {
 
-    private final String vvzid;
+    protected final String vvzid;
+    protected final String isin;
 
-    protected VvzWarehouseInstrument(String vvzid) {
-        Objects.requireNonNull(vvzid);
-
-        this.vvzid = vvzid;
+    protected VvzWarehouseInstrument(VvzInstrument vvzInstrument) {
+        Objects.requireNonNull(vvzInstrument);
+        this.vvzid = vvzInstrument.vvzid;
+        this.isin = vvzInstrument.isin;
     }
 }

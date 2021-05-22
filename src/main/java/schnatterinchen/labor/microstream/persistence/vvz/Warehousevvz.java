@@ -16,6 +16,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 @Component
 public class Warehousevvz implements VvzPersistence {
@@ -32,13 +33,13 @@ public class Warehousevvz implements VvzPersistence {
         this.storageInstrument1 = EmbeddedStorage.start(vvzDataRoot, Paths.get(storage_instrument1));
         Instant finish = Instant.now();
         initialLoadTimeMilliSecs = Duration.between(start, finish).toMillis();
-        logger.info("initialized warehouse with [{}] vvzinstruments in [{}] msecs", vvzDataRoot.vvzInstrumentMap.size(), initialLoadTimeMilliSecs);
+        logger.info("initialized warehouse with [{}] vvzinstruments in [{}] msecs", vvzDataRoot.vvzWarehouseInstrumentConcurrentMap.size(), initialLoadTimeMilliSecs);
     }
 
     @Override
     public void storeVvzInstrument(VvzInstrument vvzInstrument) {
         if (vvzInstrument != null) {
-            vvzDataRoot.vvzInstrumentMap.put(vvzInstrument.vvzid, vvzInstrument);
+            vvzDataRoot.vvzWarehouseInstrumentConcurrentMap.put(vvzInstrument.vvzid, new VvzWarehouseInstrument(vvzInstrument));
             store();
         }
     }
@@ -46,30 +47,36 @@ public class Warehousevvz implements VvzPersistence {
     @Override
     public void storeVvzInstrument(Collection<VvzInstrument> vvzInstrumentCollection) {
         if (vvzInstrumentCollection != null) {
-            vvzInstrumentCollection.forEach(x -> vvzDataRoot.vvzInstrumentMap.put(x.vvzid, x));
+            vvzInstrumentCollection.forEach(x -> vvzDataRoot.vvzWarehouseInstrumentConcurrentMap
+                    .put(x.vvzid, new VvzWarehouseInstrument(x)));
             store();
         }
     }
 
     @Override
     public Collection<VvzInstrument> fetchvvzInstruments() {
-        Collection<VvzInstrument> vvzInstrumentCollection = vvzDataRoot.vvzInstrumentMap.values();
+        Collection<VvzInstrument> vvzInstrumentCollection = vvzDataRoot.vvzWarehouseInstrumentConcurrentMap
+                .values().stream().map(x -> convert(x)).collect(Collectors.toList());
         return Collections.unmodifiableCollection(vvzInstrumentCollection);
     }
 
     @Override
     public void deleteAll() {
-        vvzDataRoot.vvzInstrumentMap.clear();
+        vvzDataRoot.vvzWarehouseInstrumentConcurrentMap.clear();
         store();
     }
 
     @Override
     public WarehouseDetails fetchWarehouseDetails() {
-        return new WarehouseDetails(initialLoadTimeMilliSecs, vvzDataRoot.vvzInstrumentMap.size());
+        return new WarehouseDetails(initialLoadTimeMilliSecs, vvzDataRoot.vvzWarehouseInstrumentConcurrentMap.size());
     }
 
     private synchronized void store() {
         /* not thread safe */
-        storageInstrument1.store(vvzDataRoot.vvzInstrumentMap);
+        storageInstrument1.store(vvzDataRoot.vvzWarehouseInstrumentConcurrentMap);
+    }
+
+    private VvzInstrument convert(VvzWarehouseInstrument vvzWarehouseInstrument) {
+        return new VvzInstrument(vvzWarehouseInstrument.vvzid, vvzWarehouseInstrument.isin);
     }
 }

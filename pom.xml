@@ -65,7 +65,12 @@
             <artifactId>commons-lang3</artifactId>
             <version>${apache.commons-lang3.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit</artifactId>
+            <version>0.18.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
