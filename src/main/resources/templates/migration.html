@@ -53,6 +53,13 @@
                             </form>
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan="5">
+                            <form action="/clone" method="post">
+                                <input type="submit" value="Clone VVZ Db and measure load time"/>
+                            </form>
+                        </td>
+                    </tr>
                 </table>
                 <!--ul class="collection">
                     <li class="collection-item card-panel red ligthen-3">Instrument2 and Instrumen1 with same property
@@ -65,11 +72,14 @@
                 <h5>Data structure</h5>
                 <table>
                     <tr>
-                        <th><span th:text="'# of vvzInstruments: ' + ${warehousedetailsVvz.warehouseSize}"></span>
+                        <th><span th:text="'# of vvzInstruments: ' + ${warehousedetailsVvz.warehouseInventorySize}"></span>
+                        </th>
+                        <th><span
+                                th:text="'Warehouse file size: ' + ${warehousedetailsVvz.warehouseSize}"></span>
                         </th>
                     </tr>
                     <tr th:each="instrument : ${vvzinstrumentlist}">
-                        <td>
+                        <td colspan="2">
                             <div th:each="line: ${instrument.toJsonLines()}" class="code">
                                 <p th:text="${line}"/>
                             </div>

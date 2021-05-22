@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import schnatterinchen.labor.microstream.model.DataGenerator;
 import schnatterinchen.labor.microstream.model.VvzInstrument;
+import schnatterinchen.labor.microstream.usecases.CloneAndMeasureLoadMicroserviceDb;
 import schnatterinchen.labor.microstream.usecases.VvzPersistence;
 
 import java.time.Duration;
@@ -25,15 +26,18 @@ public class VvzInstrumentController {
 
     private final VvzPersistence vvzPersistence;
     private final DataGenerator dataGenerator;
+    private final CloneAndMeasureLoadMicroserviceDb cloneAndMeasureLoadMicroserviceDb;
     private final List<String> messagesList = new ArrayList<>();
     private String lastAction = "";
     boolean ignoreLastAction = true;
 
     @Autowired
     private VvzInstrumentController(VvzPersistence vvzPersistence
-            , DataGenerator dataGenerator) {
+            , DataGenerator dataGenerator
+            , CloneAndMeasureLoadMicroserviceDb cloneAndMeasureLoadMicroserviceDb) {
         this.vvzPersistence = vvzPersistence;
         this.dataGenerator = dataGenerator;
+        this.cloneAndMeasureLoadMicroserviceDb = cloneAndMeasureLoadMicroserviceDb;
     }
 
     @GetMapping(value = "/")
@@ -83,25 +87,11 @@ public class VvzInstrumentController {
         return "redirect:/";
     }
 
-    @PostMapping(value = "/migrate1_to_2")
-    String migrate1_to_2(Model model) {
-        logger.info("POST /migrate1_to_2");
-        {
-            try {
-                /*
-                File src = Paths.get(storage_instrument1).toFile();
-                File dst = Paths.get(storage_instrument2).toFile();
-                if (dst.exists()) {
-                    messagesList.add("delete [" + dst.toString() + "]");
-                    FileUtils.deleteDirectory(dst);
-                }
-                messagesList.add("copy [" + src.toString() + "] --> [" + dst.toString() + "]");
-                FileUtils.copyDirectory(src, dst);
-                EmbeddedStorage.start(instrument2Root, Paths.get(storage_instrument2)); */
-            } catch (Exception e) {
-                messagesList.add(e.getMessage());
-            }
-        }
+    @PostMapping(value = "/clone")
+    String clone(Model model) {
+        logger.info("POST /clone");
+        lastAction = "loaded via Microstream: " + cloneAndMeasureLoadMicroserviceDb.cloneAndLoad();
+        ignoreLastAction = false;
         return "redirect:/";
     }
 }
