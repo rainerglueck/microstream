@@ -66,7 +66,7 @@ public class VvzInstrumentController {
 
     @PostMapping(value = "/add")
     String add(Model model, @RequestParam(name = "nbr") int nbr) {
-        logger.info("POST /add?nbr=" + nbr);
+        logger.info("POST /add?nbr=[{}]", nbr);
         Instant start;
         Instant finish;
 
@@ -92,6 +92,13 @@ public class VvzInstrumentController {
         logger.info("POST /clone");
         lastAction = "loaded via Microstream: " + cloneAndMeasureLoadMicroserviceDb.cloneAndLoad();
         ignoreLastAction = false;
+        return "redirect:/";
+    }
+
+    @PostMapping(value = "/filter")
+    String filter(Model model, @RequestParam(name = "vvzid") String vvzid) {
+        logger.info("POST /filter?vvzid=[{}]", vvzid);
+
         return "redirect:/";
     }
 }
