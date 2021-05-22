@@ -50,6 +50,8 @@ public class LayeredArchitectureTest {
                 ;
 
         archRule.check(importedClasses);
+        noClasses().that().resideInAPackage("..api..")
+                .should().dependOnClassesThat().resideInAPackage("..model..");
     }
 
     @Test
