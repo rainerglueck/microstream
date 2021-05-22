@@ -44,6 +44,14 @@ public class Warehousevvz implements VvzPersistence {
     }
 
     @Override
+    public void storeVvzInstrument(Collection<VvzInstrument> vvzInstrumentCollection) {
+        if (vvzInstrumentCollection != null) {
+            vvzInstrumentCollection.forEach(x -> vvzDataRoot.vvzInstrumentMap.put(x.vvzid, x));
+            storageInstrument1.store(vvzDataRoot.vvzInstrumentMap);
+        }
+    }
+
+    @Override
     public Collection<VvzInstrument> fetchvvzInstruments() {
         Collection<VvzInstrument> vvzInstrumentCollection = vvzDataRoot.vvzInstrumentMap.values();
         return Collections.unmodifiableCollection(vvzInstrumentCollection);

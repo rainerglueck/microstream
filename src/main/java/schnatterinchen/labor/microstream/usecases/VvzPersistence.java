@@ -9,6 +9,8 @@ public interface VvzPersistence {
 
     void storeVvzInstrument(VvzInstrument vvzInstrument);
 
+    void storeVvzInstrument(Collection<VvzInstrument> vvzInstrumentCollection);
+
     Collection<VvzInstrument> fetchvvzInstruments();
 
     void deleteAll();

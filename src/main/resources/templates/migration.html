@@ -38,6 +38,11 @@
                             </form>
                         </td>
                         <td>
+                            <form action="/add?nbr=20000" method="post">
+                                <input type="submit" value="Add 20'000 VVZ Instrument"/>
+                            </form>
+                        </td>
+                        <td>
                             <form action="/deleteall" method="post">
                                 <input type="submit" value="Delete all VVZ Instrument"/>
                             </form>
@@ -69,6 +74,7 @@
                 <h5>Performance details</h5>
                 <div th:text="'VVZ Warehouse initial load time [ms]: ' + ${warehousedetailsVvz.initialLoadTimeMilliSecs}"
                      class="code"></div>
+                <div th:text="${lastAction}" class="code"></div>
             </div>
         </div>
     </div>
