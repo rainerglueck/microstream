@@ -39,7 +39,7 @@ public class Warehousevvz implements VvzPersistence {
     public void storeVvzInstrument(VvzInstrument vvzInstrument) {
         if (vvzInstrument != null) {
             vvzDataRoot.vvzInstrumentMap.put(vvzInstrument.vvzid, vvzInstrument);
-            storageInstrument1.store(vvzDataRoot.vvzInstrumentMap);
+            store();
         }
     }
 
@@ -47,7 +47,7 @@ public class Warehousevvz implements VvzPersistence {
     public void storeVvzInstrument(Collection<VvzInstrument> vvzInstrumentCollection) {
         if (vvzInstrumentCollection != null) {
             vvzInstrumentCollection.forEach(x -> vvzDataRoot.vvzInstrumentMap.put(x.vvzid, x));
-            storageInstrument1.store(vvzDataRoot.vvzInstrumentMap);
+            store();
         }
     }
 
@@ -60,11 +60,16 @@ public class Warehousevvz implements VvzPersistence {
     @Override
     public void deleteAll() {
         vvzDataRoot.vvzInstrumentMap.clear();
-        storageInstrument1.store(vvzDataRoot);
+        store();
     }
 
     @Override
     public WarehouseDetails fetchWarehouseDetails() {
         return new WarehouseDetails(initialLoadTimeMilliSecs, vvzDataRoot.vvzInstrumentMap.size());
+    }
+
+    private synchronized void store() {
+        /* not thread safe */
+        storageInstrument1.store(vvzDataRoot.vvzInstrumentMap);
     }
 }
