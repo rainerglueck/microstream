@@ -137,4 +137,14 @@ public class VvzWarehouse implements VvzPersistence, CloneAndMeasureLoadMicroser
     private String getWarehouseSize(File warehouse) {
         return FileUtils.byteCountToDisplaySize(FileUtils.sizeOfDirectory(warehouse));
     }
+
+    @Override
+    public Collection<VvzInstrument> filterBy(final String vvzid) {
+        final String VVZID = vvzid.toUpperCase();
+        return vvzDataRoot.vvzWarehouseInstrumentConcurrentMap.values()
+                .stream()
+                .filter(x -> x.vvzid.toUpperCase().contains(VVZID))
+                .map(x -> convert(x))
+                .collect(Collectors.toList());
+    }
 }

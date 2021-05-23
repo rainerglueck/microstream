@@ -16,7 +16,9 @@ import schnatterinchen.labor.microstream.usecases.VvzPersistence;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Controller
@@ -27,7 +29,7 @@ public class VvzInstrumentController {
     private final VvzPersistence vvzPersistence;
     private final DataGenerator dataGenerator;
     private final CloneAndMeasureLoadMicroserviceDb cloneAndMeasureLoadMicroserviceDb;
-    private final List<String> messagesList = new ArrayList<>();
+    private final List<VvzInstrument> vvzInstrumentSearchList = Collections.synchronizedList(new ArrayList<>());
     private String lastAction = "";
     boolean ignoreLastAction = true;
 
@@ -49,6 +51,8 @@ public class VvzInstrumentController {
         model.addAttribute("warehousedetailsVvz", vvzPersistence.fetchWarehouseDetails());
         model.addAttribute("vvzinstrumentlist", first3elements);
         model.addAttribute("lastAction", (ignoreLastAction) ? "" : lastAction);
+        model.addAttribute("vvzInstrumentSearchList", vvzInstrumentSearchList.stream().limit(3)
+                .collect(Collectors.toList()));
         ignoreLastAction = true;
         return "migration";
     }
@@ -100,7 +104,17 @@ public class VvzInstrumentController {
     String filter(Model model, @RequestBody MultiValueMap<String, String> formData) {
         logger.info("POST /filter formData [{}]", formData);
         final String vvzid = formData.getFirst("vvzid");
-
+        vvzInstrumentSearchList.clear();
+        long exectime = executionStopWatch((x) ->
+                vvzInstrumentSearchList.addAll(vvzPersistence.filterBy(vvzid)));
+        lastAction = "Found [" + vvzInstrumentSearchList.size() + "] Vvz Instrument's in [" + exectime + "] ms";
+        ignoreLastAction = false;
         return "redirect:/";
+    }
+
+    private long executionStopWatch(final Consumer<Object> consumer) {
+        final Instant start = Instant.now();
+        consumer.accept(start);
+        return Duration.between(start, Instant.now()).toMillis();
     }
 }

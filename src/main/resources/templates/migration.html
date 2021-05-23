@@ -92,9 +92,9 @@
                     <div class="row">
                         <form id="filter" class="col s12" method="post" action="/filter">
                             <div class="row">
-                                <div class="input-field col s12">
+                                <div class="input-field col s6">
                                     <textarea id="vvzid" name="vvzid" class="materialize-textarea"></textarea>
-                                    <label for="vvzid">Search for VvzId (regex, ignore case)</label>
+                                    <label for="vvzid">Search for VvzId ('like' serach, ignore case)</label>
                                 </div>
                             </div>
                             <div class="row">
@@ -103,6 +103,17 @@
                                 </button>
                             </div>
                         </form>
+                    </div>
+                    <div class="row">
+                        <table>
+                            <tr th:each="instrument : ${vvzInstrumentSearchList}">
+                                <td colspan="2">
+                                    <div th:each="line: ${instrument.toJsonLines()}" class="code">
+                                        <p th:text="${line}"/>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
                 <h5>Performance details</h5>

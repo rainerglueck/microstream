@@ -13,6 +13,8 @@ public interface VvzPersistence {
 
     Collection<VvzInstrument> fetchvvzInstruments();
 
+    Collection<VvzInstrument> filterBy(String vvzid);
+
     void deleteAll();
 
     WarehouseDetails fetchWarehouseDetails();
