@@ -72,7 +72,8 @@
                 <h5>Data structure</h5>
                 <table>
                     <tr>
-                        <th><span th:text="'# of vvzInstruments: ' + ${warehousedetailsVvz.warehouseInventorySize}"></span>
+                        <th><span
+                                th:text="'# of vvzInstruments: ' + ${warehousedetailsVvz.warehouseInventorySize}"></span>
                         </th>
                         <th><span
                                 th:text="'Warehouse file size: ' + ${warehousedetailsVvz.warehouseSize}"></span>
@@ -88,21 +89,21 @@
                 </table>
                 <h5>Search and filter</h5>
                 <div>
-                    <form class="col s12" action="/filter" method="post">
-                        <table>
-                            <tr>
-                                <td>
-                                    <div class="input-field col s6">
-                                        <input placeholder="VvzId search" id="vvzid" value="vvzid" type="text" class="">
-                                        <label for="vvzid">Regex for VVZID (ignore case)</label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <button type="submit" value="submit" class="btn waves-effect">Search</button>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
+                    <div class="row">
+                        <form id="filter" class="col s12" method="post" action="/filter">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea id="vvzid" name="vvzid" class="materialize-textarea"></textarea>
+                                    <label for="vvzid">Search for VvzId (regex, ignore case)</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button class="btn waves-effect waves-light"
+                                        onclick="document.getElementById('filter').submit()">Search
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 <h5>Performance details</h5>
                 <div th:text="'VVZ Warehouse initial load time [ms]: ' + ${warehousedetailsVvz.initialLoadTimeMilliSecs}"

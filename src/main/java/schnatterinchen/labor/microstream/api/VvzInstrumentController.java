@@ -3,11 +3,11 @@ package schnatterinchen.labor.microstream.api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
 import schnatterinchen.labor.microstream.model.DataGenerator;
 import schnatterinchen.labor.microstream.model.VvzInstrument;
 import schnatterinchen.labor.microstream.usecases.CloneAndMeasureLoadMicroserviceDb;
@@ -95,9 +95,11 @@ public class VvzInstrumentController {
         return "redirect:/";
     }
 
-    @PostMapping(value = "/filter")
-    String filter(Model model, @RequestParam(name = "vvzid") String vvzid) {
-        logger.info("POST /filter?vvzid=[{}]", vvzid);
+    @RequestMapping(value = "/filter", method = RequestMethod.POST
+            , consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    String filter(Model model, @RequestBody MultiValueMap<String, String> formData) {
+        logger.info("POST /filter formData [{}]", formData);
+        final String vvzid = formData.getFirst("vvzid");
 
         return "redirect:/";
     }
