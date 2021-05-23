@@ -29,7 +29,7 @@ public class VvzInstrumentController {
     private final VvzPersistence vvzPersistence;
     private final DataGenerator dataGenerator;
     private final CloneAndMeasureLoadMicroserviceDb cloneAndMeasureLoadMicroserviceDb;
-    private final List<VvzInstrument> vvzInstrumentSearchList = Collections.synchronizedList(new ArrayList<>());
+    private final List<VvzInstrument> vvzInstrumentSearchResultList = Collections.synchronizedList(new ArrayList<>());
     private String lastAction = "";
     boolean ignoreLastAction = true;
 
@@ -51,7 +51,7 @@ public class VvzInstrumentController {
         model.addAttribute("warehousedetailsVvz", vvzPersistence.fetchWarehouseDetails());
         model.addAttribute("vvzinstrumentlist", first3elements);
         model.addAttribute("lastAction", (ignoreLastAction) ? "" : lastAction);
-        model.addAttribute("vvzInstrumentSearchList", vvzInstrumentSearchList.stream().limit(3)
+        model.addAttribute("vvzInstrumentSearchResultList", vvzInstrumentSearchResultList.stream().limit(3)
                 .collect(Collectors.toList()));
         ignoreLastAction = true;
         return "migration";
@@ -104,10 +104,10 @@ public class VvzInstrumentController {
     String filter(Model model, @RequestBody MultiValueMap<String, String> formData) {
         logger.info("POST /filter formData [{}]", formData);
         final String vvzid = formData.getFirst("vvzid");
-        vvzInstrumentSearchList.clear();
+        vvzInstrumentSearchResultList.clear();
         long exectime = executionStopWatch((x) ->
-                vvzInstrumentSearchList.addAll(vvzPersistence.filterBy(vvzid)));
-        lastAction = "Found [" + vvzInstrumentSearchList.size() + "] Vvz Instrument's in [" + exectime + "] ms";
+                vvzInstrumentSearchResultList.addAll(vvzPersistence.filterBy(vvzid)));
+        lastAction = "Found [" + vvzInstrumentSearchResultList.size() + "] VvzInstrument's in [" + exectime + "] ms";
         ignoreLastAction = false;
         return "redirect:/";
     }

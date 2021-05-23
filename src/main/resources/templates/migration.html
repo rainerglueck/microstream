@@ -106,7 +106,7 @@
                     </div>
                     <div class="row">
                         <table>
-                            <tr th:each="instrument : ${vvzInstrumentSearchList}">
+                            <tr th:each="instrument : ${vvzInstrumentSearchResultList}">
                                 <td colspan="2">
                                     <div th:each="line: ${instrument.toJsonLines()}" class="code">
                                         <p th:text="${line}"/>
