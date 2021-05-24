@@ -27,7 +27,8 @@
         <file>${LOGS}/microstream-v1.log</file>
         <encoder
                 class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+            <!--Pattern>%d %p %C{1.} [%t] %m%n</Pattern-->
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
         </encoder>
 
         <rollingPolicy

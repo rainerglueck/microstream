@@ -40,6 +40,7 @@ public class VvzInstrumentController {
         this.vvzPersistence = vvzPersistence;
         this.dataGenerator = dataGenerator;
         this.cloneAndMeasureLoadMicroserviceDb = cloneAndMeasureLoadMicroserviceDb;
+        logger.info("initialization finished Warehouse: [{}]", vvzPersistence.fetchWarehouseDetails().toJson());
     }
 
     @GetMapping(value = "/")
@@ -53,6 +54,10 @@ public class VvzInstrumentController {
         model.addAttribute("lastAction", (ignoreLastAction) ? "" : lastAction);
         model.addAttribute("vvzInstrumentSearchResultList", vvzInstrumentSearchResultList.stream().limit(3)
                 .collect(Collectors.toList()));
+        if (!ignoreLastAction) {
+            logger.info(lastAction);
+        }
+        logger.info("Warehouse: [{}]", vvzPersistence.fetchWarehouseDetails().toJson());
         ignoreLastAction = true;
         return "migration";
     }
