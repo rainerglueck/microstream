@@ -2,14 +2,14 @@
 
 ## Setup
 ### Domain model
-1 Class 'model.VvzInstrument'  
+Class 'model.VvzInstrument'  
 `{ "vvzid" : "05AIM<random 8 chars>", "isin" : "CH<random 10 numbers>" }`  
 
 ### Persistence
-1 Class 'persistence.VvzDataRoot' as storage object for Microstream
+Class 'persistence.VvzDataRoot' as storage object for Microstream  
 `protected final ConcurrentMap<String, VvzWarehouseInstrument> vvzWarehouseInstrumentConcurrentMap`
 
-1 Class 'persistence.VvzWarehouseInstrument' as storage representation for VvzInstrument
+Class 'persistence.VvzWarehouseInstrument' as storage representation for VvzInstrument  
 ```
     protected VvzWarehouseInstrument(VvzInstrument vvzInstrument) {
         Objects.requireNonNull(vvzInstrument);
@@ -18,7 +18,7 @@
     }
 ```
 
-1 Class 'persistence.VvzWarehous', stores to filesystem
+Class 'persistence.VvzWarehous', stores to filesystem  
 ```
 ...
     private final EmbeddedStorageManager storageInstrument1;
@@ -88,7 +88,7 @@ for details see [performance.log](/logs/performance.log)
 see above
 
 ### one.microstream.persistence.exceptions.PersistenceException, 
-for details see [PersistenceException.log](/logs/persistenceException.log):
+for details see [persistenceException.log](/logs/persistenceException.log):
 ```
 2021-05-23 18:51:48.729  INFO 8164 --- [nio-8088-exec-6] s.l.m.api.VvzInstrumentController        : POST /add?nbr=[100000]
 2021-05-23 18:51:49.775  INFO 8164 --- [nio-8088-exec-5] s.l.m.api.VvzInstrumentController        : POST /add?nbr=[20000]
@@ -116,7 +116,7 @@ one.microstream.persistence.exceptions.PersistenceException: Inconsistent elemen
 ```
 
 ### Migration of data
-It is not possible to 
+It is not possible to  
 `store(VvzInstrument {"vvzid":"05AIM00000", "isin":"CH00000"})`  
-and then load to another class with same structure, e.g.
+and then load to another class with same structure, e.g.  
 `EmbeddedStorage.start(XetraInstrument{"vvzid":?, "isin":?},...)`
