@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Microstream Trials</title>
+
+    <!-- link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/-->
+    <link type="text/css" rel="stylesheet" href="/css/mystyles.css"/>
+    <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection"/>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icons">
+    <script type="text/javascript" src="/materialize/js/materialize.js"></script>
+    <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+</head>
+
+<body>
+
+<!-- nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">Mkyong.com</a>
+</nav -->
+
+<main role="main" class="container">
+    <div class="starter-template">
+        <div class="row">
+            <div id="migration" class="col s12">
+                <h4>Microstream trials</h4>
+                <table>
+                    <tr>
+                        <td>
+                            <form action="/add?nbr=1" method="post">
+                                <input type="submit" value="Add VVZ I."/>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/add?nbr=1000" method="post">
+                                <input type="submit" value="Add 1000 VVZ I."/>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/add?nbr=20000" method="post">
+                                <input type="submit" value="Add 20'000 VVZ I."/>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/add?nbr=100000" method="post">
+                                <input type="submit" value="Add 100'000 VVZ I."/>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/deleteall" method="post">
+                                <input type="submit" value="Delete all VVZ Instrument"/>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <form action="/clone" method="post">
+                                <input type="submit" value="Clone VVZ Db and measure load time"/>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+                <!--ul class="collection">
+                    <li class="collection-item card-panel red ligthen-3">Instrument2 and Instrumen1 with same property
+                        names, but different Object types [Cannot cast ...Instrument2Root to ...Instrument1Root]
+                    </li>
+                    <li class="collection-item card-panel red ligthen-3">Type change: field 'isin' String: -> Optional&lt;String&gt;
+                        [Cannot cast ...Instrument2Root to ...Instrument1Root]
+                    </li>
+                </ul-->
+                <h5>Data structure</h5>
+                <table>
+                    <tr>
+                        <th><span
+                                th:text="'# of vvzInstruments: ' + ${warehousedetailsVvz.warehouseInventorySize}"></span>
+                        </th>
+                        <th><span
+                                th:text="'Warehouse file size: ' + ${warehousedetailsVvz.warehouseSize}"></span>
+                        </th>
+                    </tr>
+                    <tr th:each="instrument : ${vvzinstrumentlist}">
+                        <td colspan="2">
+                            <div th:each="line: ${instrument.toJsonLines()}" class="code">
+                                <p th:text="${line}"/>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <h5>Search and filter</h5>
+                <div>
+                    <div class="row">
+                        <form id="filter" class="col s12" method="post" action="/filter">
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <textarea id="vvzid" name="vvzid" class="materialize-textarea"></textarea>
+                                    <label for="vvzid">Search for VvzId ('like' serach, ignore case)</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button class="btn waves-effect waves-light"
+                                        onclick="document.getElementById('filter').submit()">Search
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row">
+                        <table>
+                            <tr th:each="instrument : ${vvzInstrumentSearchResultList}">
+                                <td colspan="2">
+                                    <div th:each="line: ${instrument.toJsonLines()}" class="code">
+                                        <p th:text="${line}"/>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <h5>Performance details</h5>
+                <div th:text="'VVZ Warehouse initial load time [ms]: ' + ${warehousedetailsVvz.initialLoadTimeMilliSecs}"
+                     class="code"></div>
+                <div th:text="${lastAction}" class="code"></div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+<script>
+
+</script>
+</html>
