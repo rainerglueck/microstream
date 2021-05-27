@@ -120,3 +120,13 @@ It is not possible to
 `store(VvzInstrument {"vvzid":"05AIM00000", "isin":"CH00000"})`  
 and then load to another class with same structure, e.g.  
 `EmbeddedStorage.start(XetraInstrument{"vvzid":?, "isin":?},...)`
+
+### Transaktionssicherheit
+Wie können Transaktionsklammern gesetzt werden?
+
+### Scalability
+running code using Microstreams in several PODs?
+
+### Getting insides into the data pool
+"Classic" persistence implementations bring their own "Viewer", e.g. Oracle SQL Developer. How can you look into the datapool without running the application? Does it require custom code that fits the stored datastructure?
+
